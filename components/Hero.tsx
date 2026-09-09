@@ -97,14 +97,21 @@ export default function Hero() {
             <p className="mt-2 text-[11px] text-ink-soft">Aera Earbuds</p>
           </motion.div>
 
-          {miniProducts.map(({ label, icon: Icon, className, depth }) => {
-            const x = useTransform(mx, v => v * depth);
-            const y = useTransform(my, v => v * depth);
-            return <motion.div key={label} style={{ x, y }} className={`absolute ${className} z-10 rounded-2xl border border-white/90 bg-white/85 p-4 shadow-lift backdrop-blur-md`}>
-              <Icon size={30} strokeWidth={1.35} className="text-ink/75" />
-              <p className="mt-2 text-[11px] text-ink-soft">{label}</p>
-            </motion.div>;
-          })}
+       <motion.div
+  style={{ x: useTransform(mx, v => v * miniProducts[0].depth), y: useTransform(my, v => v * miniProducts[0].depth) }}
+  className={`absolute ${miniProducts[0].className} z-10 rounded-2xl border border-white/90 bg-white/85 p-4 shadow-lift backdrop-blur-md`}
+>
+  <Watch size={30} strokeWidth={1.35} className="text-ink/75" />
+  <p className="mt-2 text-[11px] text-ink-soft">{miniProducts[0].label}</p>
+</motion.div>
+
+<motion.div
+  style={{ x: useTransform(mx, v => v * miniProducts[1].depth), y: useTransform(my, v => v * miniProducts[1].depth) }}
+  className={`absolute ${miniProducts[1].className} z-10 rounded-2xl border border-white/90 bg-white/85 p-4 shadow-lift backdrop-blur-md`}
+>
+  <Footprints size={30} strokeWidth={1.35} className="text-ink/75" />
+  <p className="mt-2 text-[11px] text-ink-soft">{miniProducts[1].label}</p>
+</motion.div>
           <div className="absolute bottom-10 right-[9%] rounded-full border border-white/80 bg-ink px-4 py-2 text-[10px] uppercase tracking-[.18em] text-bone shadow-card">TBP EDIT</div>
         </div>
       </div>

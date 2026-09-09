@@ -18,10 +18,10 @@ export default function WishlistPage() {
 
       <section className="mx-auto max-w-content px-6 py-14 md:px-10">
         <div className="max-w-lg">
-          <h1 className="font-display text-3xl text-ink md:text-4xl">Your Wishlist</h1>
-          <p className="mt-3 text-ink-soft">
-            Products you've saved with the heart icon, kept on this device.
-          </p>
+        <h1 className="font-display text-3xl text-ink md:text-4xl">Your Wishlist</h1>
+<p className="mt-3 text-ink-soft">
+  Products you&apos;ve saved with the heart icon, kept on this device.
+</p>
         </div>
 
         {savedProducts.length === 0 ? (
