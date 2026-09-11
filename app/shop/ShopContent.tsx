@@ -1,9 +1,10 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { SlidersHorizontal, X } from "lucide-react";
 import ProductCard from "@/components/ProductCard";
+import { getSupabaseProducts } from "@/lib/supabaseProducts";
 import {
   allProducts,
   categories,
@@ -11,6 +12,7 @@ import {
   PRICE_MIN,
   PRICE_MAX,
   type Audience,
+  type Product,
 } from "@/data/products";
 
 export default function ShopContent() {
@@ -27,9 +29,19 @@ export default function ShopContent() {
     "featured"
   );
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const [supabaseProducts, setSupabaseProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    getSupabaseProducts().then(setSupabaseProducts);
+  }, []);
+
+  const combinedProducts = useMemo(
+    () => [...allProducts, ...supabaseProducts],
+    [supabaseProducts]
+  );
 
   const filtered = useMemo(() => {
-    let results = allProducts.filter((product) => {
+    let results = combinedProducts.filter((product) => {
       const matchesCategory = category === "All" || product.category === category;
       const matchesAudience = audience === "All" || product.audience === audience;
       const matchesPrice =
@@ -46,7 +58,7 @@ export default function ShopContent() {
     if (sort === "rating") results = [...results].sort((a, b) => b.rating - a.rating);
 
     return results;
-  }, [category, audience, minPrice, maxPrice, query, sort]);
+  }, [combinedProducts, category, audience, minPrice, maxPrice, query, sort]);
 
   function handleMinChange(value: number) {
     setMinPrice(Math.min(value, maxPrice));
@@ -76,8 +88,8 @@ export default function ShopContent() {
         <div className="max-w-lg">
           <h1 className="font-display text-3xl text-ink md:text-4xl">Shop All Picks</h1>
           <p className="mt-3 text-ink-soft">
-  Filter by category, audience, or price to find what you&apos;re after.
-</p>
+            Filter by category, audience, or price to find what you're after.
+          </p>
         </div>
 
         <button

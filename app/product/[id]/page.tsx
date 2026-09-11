@@ -5,23 +5,28 @@ import { Star, ArrowLeft } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { allProducts, getProductById } from "@/data/products";
+import { getSupabaseProductById } from "@/lib/supabaseProducts";
 import { iconMap } from "@/lib/icons";
+
+async function findProduct(id: string) {
+  return getProductById(id) ?? (await getSupabaseProductById(id));
+}
 
 export function generateStaticParams() {
   return allProducts.map((product) => ({ id: product.id }));
 }
 
-export function generateMetadata({
+export async function generateMetadata({
   params,
 }: {
   params: { id: string };
-}): Metadata {
-  const product = getProductById(params.id);
+}): Promise<Metadata> {
+  const product = await findProduct(params.id);
   return { title: product ? `${product.name} — TBP Picks` : "Product — TBP Picks" };
 }
 
-export default function ProductPage({ params }: { params: { id: string } }) {
-  const product = getProductById(params.id);
+export default async function ProductPage({ params }: { params: { id: string } }) {
+  const product = await findProduct(params.id);
   if (!product) notFound();
 
   const Icon = iconMap[product.icon];
@@ -64,9 +69,14 @@ export default function ProductPage({ params }: { params: { id: string } }) {
             <p className="mt-8 font-display text-3xl text-ink">{product.price}</p>
 
             <div className="mt-8 flex flex-wrap gap-4">
-              <button className="rounded-full bg-ink px-8 py-3.5 text-[15px] text-bone transition-colors hover:bg-gold-deep">
+               
+                           <a href={`/api/go?retailer=${product.retailer}&url=${encodeURIComponent(product.productUrl)}`}
+                target="_blank"
+                rel="noopener noreferrer sponsored"
+                className="rounded-full bg-ink px-8 py-3.5 text-[15px] text-bone transition-colors hover:bg-gold-deep"
+              >
                 Buy Now
-              </button>
+              </a>
               <Link
                 href="/shop"
                 className="rounded-full border border-ink/20 px-8 py-3.5 text-[15px] text-ink transition-colors hover:border-ink"
@@ -74,10 +84,6 @@ export default function ProductPage({ params }: { params: { id: string } }) {
                 Keep Browsing
               </Link>
             </div>
-
-            <p className="mt-4 text-xs text-ink-soft">
-              Buy Now will route to the external retailer once that step is connected.
-            </p>
           </div>
         </div>
       </section>

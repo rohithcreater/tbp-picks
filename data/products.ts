@@ -1,6 +1,5 @@
-
-
 import type { IconName } from "@/lib/icons";
+import type { Retailer } from "@/lib/retailers/types";
 
 export type Audience = "Men" | "Women" | "Kids" | "Unisex";
 
@@ -16,6 +15,8 @@ export type Product = {
   tone: string;
   description: string;
   audience: Audience;
+  retailer: Retailer;
+  productUrl: string;
 };
 
 // Single source of truth for every product in the catalog.
@@ -24,6 +25,8 @@ export type Product = {
 export const allProducts: Product[] = [
   {
     id: "earbuds-01",
+    retailer: "amazon",
+    productUrl: "https://www.amazon.in/s?k=wireless+earbuds+noise+cancellation",
     name: "Aera Wireless Earbuds",
     category: "Electronics",
     price: "₹6,499",
@@ -38,6 +41,8 @@ export const allProducts: Product[] = [
   },
   {
     id: "watch-01",
+    retailer: "amazon",
+    productUrl: "https://www.amazon.in/s?k=smartwatch+fitness+tracker",
     name: "Orbit Series Smartwatch",
     category: "Gadgets",
     price: "₹11,999",
@@ -52,6 +57,8 @@ export const allProducts: Product[] = [
   },
   {
     id: "sneaker-01",
+    retailer: "amazon",
+    productUrl: "https://www.amazon.in/s?k=running+sneakers+men",
     name: "Strand Running Sneaker",
     category: "Fashion",
     price: "₹4,299",
@@ -66,6 +73,8 @@ export const allProducts: Product[] = [
   },
   {
     id: "lamp-01",
+    retailer: "amazon",
+    productUrl: "https://www.amazon.in/s?k=ceramic+desk+lamp",
     name: "Hearth Ceramic Desk Lamp",
     category: "Home",
     price: "₹2,199",
@@ -80,6 +89,8 @@ export const allProducts: Product[] = [
   },
   {
     id: "glasses-01",
+    retailer: "amazon",
+    productUrl: "https://www.amazon.in/s?k=polarized+sunglasses",
     name: "Meridian Polarized Sunglasses",
     category: "Accessories",
     price: "₹1,899",
@@ -94,6 +105,8 @@ export const allProducts: Product[] = [
   },
   {
     id: "speaker-01",
+    retailer: "amazon",
+    productUrl: "https://www.amazon.in/s?k=mini+bluetooth+speaker",
     name: "Basalt Mini Speaker",
     category: "Electronics",
     price: "₹3,299",
@@ -108,6 +121,8 @@ export const allProducts: Product[] = [
   },
   {
     id: "camera-01",
+    retailer: "amazon",
+    productUrl: "https://www.amazon.in/s?k=compact+camera",
     name: "Litho Compact Camera",
     category: "Electronics",
     price: "₹18,499",
@@ -121,6 +136,8 @@ export const allProducts: Product[] = [
   },
   {
     id: "wallet-01",
+    retailer: "amazon",
+    productUrl: "https://www.amazon.in/s?k=leather+wallet+men",
     name: "Fold Leather Wallet",
     category: "Accessories",
     price: "₹1,299",
@@ -134,6 +151,8 @@ export const allProducts: Product[] = [
   },
   {
     id: "bag-01",
+    retailer: "amazon",
+    productUrl: "https://www.amazon.in/s?k=canvas+tote+bag",
     name: "Kestrel Canvas Tote",
     category: "Fashion",
     price: "₹2,499",
@@ -147,6 +166,8 @@ export const allProducts: Product[] = [
   },
   {
     id: "skincare-01",
+    retailer: "amazon",
+    productUrl: "https://www.amazon.in/s?k=skincare+set",
     name: "Almine Skincare Set",
     category: "Beauty",
     price: "₹2,899",
@@ -160,6 +181,8 @@ export const allProducts: Product[] = [
   },
   {
     id: "kids-sneaker-01",
+    retailer: "amazon",
+    productUrl: "https://www.amazon.in/s?k=kids+velcro+sneakers",
     name: "Juniper Kids Sneaker",
     category: "Fashion",
     price: "₹1,799",
@@ -194,6 +217,7 @@ export type Category = {
   count: string;
   icon: IconName;
 };
+
 export const categories: Category[] = [
   { id: "Electronics", name: "Electronics", count: "128 picks", icon: "Headphones" },
   { id: "Fashion", name: "Fashion", count: "94 picks", icon: "Footprints" },
