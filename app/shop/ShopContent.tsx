@@ -87,9 +87,9 @@ export default function ShopContent() {
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div className="max-w-lg">
           <h1 className="font-display text-3xl text-ink md:text-4xl">Shop All Picks</h1>
-          <p className="mt-3 text-ink-soft">
-            Filter by category, audience, or price to find what you're after.
-          </p>
+  <p className="mt-3 text-ink-soft">
+  Filter by category, audience, or price to find what you&apos;re after.
+</p>
         </div>
 
         <button
