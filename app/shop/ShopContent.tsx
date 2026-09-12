@@ -238,7 +238,7 @@ export default function ShopContent() {
               No products match those filters. Try widening your price range.
             </p>
           ) : (
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-3">
               {filtered.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}
