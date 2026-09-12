@@ -35,6 +35,18 @@ export default function SignupPage() {
     setMessage("Account created. Check your inbox to confirm your email.");
   }
 
+  async function handleGoogleSignIn() {
+    if (!isSupabaseConfigured) {
+      setStatus("error");
+      setMessage("Supabase isn't connected yet.");
+      return;
+    }
+    await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: { redirectTo: `${window.location.origin}/auth/callback` },
+    });
+  }
+
   return (
     <main className="flex min-h-screen items-center bg-bone px-6 py-16">
       <div className="mx-auto w-full max-w-sm">
@@ -98,6 +110,14 @@ export default function SignupPage() {
               : "Create account"}
           </button>
         </form>
+
+        <button
+          type="button"
+          onClick={handleGoogleSignIn}
+          className="mt-3 flex w-full items-center justify-center gap-2 rounded-full border border-line px-6 py-3.5 text-[15px] text-ink transition-colors hover:border-ink"
+        >
+          Continue with Google
+        </button>
 
         <p className="mt-6 text-center text-sm text-ink-soft">
           Already have an account?{" "}
