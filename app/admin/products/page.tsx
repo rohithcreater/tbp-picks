@@ -17,6 +17,7 @@ export default function AdminProductsPage() {
   const [name, setName] = useState("");
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState("");
+  const [rating, setRating] = useState("4.5");
   const [store, setStore] = useState("Myntra");
   const [imageUrls, setImageUrls] = useState("");
   const [affiliateUrl, setAffiliateUrl] = useState("");
@@ -63,6 +64,7 @@ export default function AdminProductsPage() {
       name,
       category,
       price: price ? Number(price) : null,
+      rating: rating ? Number(rating) : 4.5,
       store,
       image_url: urlList[0] ?? "",
       image_urls: urlList,
@@ -82,6 +84,7 @@ export default function AdminProductsPage() {
     setName("");
     setCategory("");
     setPrice("");
+    setRating("4.5");
     setImageUrls("");
     setAffiliateUrl("");
     setDescription("");
@@ -125,7 +128,7 @@ export default function AdminProductsPage() {
             required
           />
 
-                  <select
+          <select
             className="w-full rounded-lg border p-3"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
@@ -141,12 +144,24 @@ export default function AdminProductsPage() {
             <option value="Gadgets">Gadgets</option>
             <option value="Accessories">Accessories</option>
           </select>
+
           <input
             className="w-full rounded-lg border p-3"
             placeholder="Price"
             type="number"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
+          />
+
+          <input
+            className="w-full rounded-lg border p-3"
+            placeholder="Rating (e.g. 4.5)"
+            type="number"
+            step="0.1"
+            min="0"
+            max="5"
+            value={rating}
+            onChange={(e) => setRating(e.target.value)}
           />
 
           <select
