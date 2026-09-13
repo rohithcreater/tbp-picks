@@ -125,14 +125,22 @@ export default function AdminProductsPage() {
             required
           />
 
-          <input
+                  <select
             className="w-full rounded-lg border p-3"
-            placeholder="Category"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
             required
-          />
-
+          >
+            <option value="" disabled>
+              Select category
+            </option>
+            <option value="Electronics">Electronics</option>
+            <option value="Fashion">Fashion</option>
+            <option value="Home">Home</option>
+            <option value="Beauty">Beauty</option>
+            <option value="Gadgets">Gadgets</option>
+            <option value="Accessories">Accessories</option>
+          </select>
           <input
             className="w-full rounded-lg border p-3"
             placeholder="Price"

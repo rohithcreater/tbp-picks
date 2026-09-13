@@ -1,8 +1,11 @@
 import Link from "next/link";
 import { categories } from "@/data/products";
+import { getSupabaseProducts } from "@/lib/supabaseProducts";
 import { iconMap } from "@/lib/icons";
 
-export default function CategoriesSection() {
+export default async function CategoriesSection() {
+  const supabaseProducts = await getSupabaseProducts();
+
   return (
     <section id="categories" className="mx-auto max-w-content px-6 py-20 md:px-10">
       <div className="max-w-lg">
@@ -13,6 +16,9 @@ export default function CategoriesSection() {
       <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
         {categories.map((category) => {
           const Icon = iconMap[category.icon];
+          const count = supabaseProducts.filter(
+            (p) => p.category === category.name
+          ).length;
           return (
             <Link
               key={category.id}
@@ -24,7 +30,9 @@ export default function CategoriesSection() {
               </div>
               <div>
                 <p className="text-[15px] text-ink">{category.name}</p>
-                <p className="mt-0.5 text-xs text-ink-soft">{category.count}</p>
+                <p className="mt-0.5 text-xs text-ink-soft">
+                  {count} {count === 1 ? "pick" : "picks"}
+                </p>
               </div>
             </Link>
           );
