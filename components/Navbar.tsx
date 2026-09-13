@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Search, Menu, X, Heart } from "lucide-react";
 import { useWishlist } from "@/lib/wishlist-context";
+import { supabase } from "@/lib/supabaseClient";
 
 const links = [
   { label: "Discover", href: "/#discover" },
@@ -19,6 +20,24 @@ export default function Navbar() {
   const [query, setQuery] = useState("");
   const router = useRouter();
   const { wishlist } = useWishlist();
+  const [userEmail, setUserEmail] = useState<string | null>(null);
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data }) => {
+      setUserEmail(data.user?.email ?? null);
+    });
+
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUserEmail(session?.user?.email ?? null);
+    });
+
+    return () => listener.subscription.unsubscribe();
+  }, []);
+
+  async function handleLogout() {
+    await supabase.auth.signOut();
+    router.push("/");
+  }
 
   function handleSearchSubmit(e: FormEvent) {
     e.preventDefault();
@@ -89,12 +108,26 @@ export default function Navbar() {
             )}
           </Link>
 
-          <Link
-            href="/login"
-            className="hidden items-center rounded-full border border-ink/20 px-5 py-2 text-sm text-ink transition-colors hover:border-ink md:flex"
-          >
-            Log in
-          </Link>
+          {userEmail ? (
+            <div className="hidden items-center gap-3 md:flex">
+              <span className="max-w-[140px] truncate text-sm text-ink-soft" title={userEmail}>
+                {userEmail}
+              </span>
+              <button
+                onClick={handleLogout}
+                className="rounded-full border border-ink/20 px-5 py-2 text-sm text-ink transition-colors hover:border-ink"
+              >
+                Log out
+              </button>
+            </div>
+          ) : (
+            <Link
+              href="/login"
+              className="hidden items-center rounded-full border border-ink/20 px-5 py-2 text-sm text-ink transition-colors hover:border-ink md:flex"
+            >
+              Log in
+            </Link>
+          )}
 
           <button
             aria-label={open ? "Close menu" : "Open menu"}
@@ -130,13 +163,25 @@ export default function Navbar() {
             >
               Wishlist
             </Link>
-            <Link
-              href="/login"
-              onClick={() => setOpen(false)}
-              className="rounded-lg px-2 py-3 text-[15px] text-ink-soft transition-colors hover:bg-sand hover:text-ink"
-            >
-              Log in
-            </Link>
+            {userEmail ? (
+              <button
+                onClick={() => {
+                  setOpen(false);
+                  handleLogout();
+                }}
+                className="rounded-lg px-2 py-3 text-left text-[15px] text-ink-soft transition-colors hover:bg-sand hover:text-ink"
+              >
+                Log out ({userEmail})
+              </button>
+            ) : (
+              <Link
+                href="/login"
+                onClick={() => setOpen(false)}
+                className="rounded-lg px-2 py-3 text-[15px] text-ink-soft transition-colors hover:bg-sand hover:text-ink"
+              >
+                Log in
+              </Link>
+            )}
           </div>
         </div>
       )}
