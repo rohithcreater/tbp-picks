@@ -8,6 +8,12 @@ import WhyTBP from "@/components/WhyTBP";
 import FinalCTA from "@/components/FinalCTA";
 import Footer from "@/components/Footer";
 
+// Trending Now, Best Picks, and category counts read live from Supabase —
+// without this, Next.js would cache the homepage at build time and admin
+// changes (toggling Trending/Best Pick, adding products) wouldn't show
+// until the next deploy.
+export const dynamic = "force-dynamic";
+
 export default function Home() {
   return (
     <main className="bg-bone">
