@@ -19,6 +19,11 @@ export function buildAffiliateLink(retailer: Retailer, productUrl: string): stri
       if (affId) url.searchParams.set("ref", affId);
       return url.toString();
     }
+        case "meesho": {
+      const affId = process.env.MEESHO_AFFILIATE_ID;
+      if (affId) url.searchParams.set("ref", affId);
+      return url.toString();
+    }
     case "other":
     default:
       return url.toString();

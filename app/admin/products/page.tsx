@@ -175,6 +175,7 @@ export default function AdminProductsPage() {
             <option value="Myntra">Myntra</option>
             <option value="Amazon">Amazon</option>
             <option value="Flipkart">Flipkart</option>
+            <option value="Meesho">Meesho</option>
             <option value="Other">Other</option>
           </select>
 

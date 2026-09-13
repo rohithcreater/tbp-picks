@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { buildAffiliateLink } from "@/lib/retailers/buildAffiliateLink";
 import type { Retailer } from "@/lib/retailers/types";
 
-const VALID_RETAILERS: Retailer[] = ["amazon", "flipkart", "myntra", "other"];
+const VALID_RETAILERS: Retailer[] = ["amazon", "flipkart", "myntra", "meesho", "other"];
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);

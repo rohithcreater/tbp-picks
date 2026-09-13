@@ -1,4 +1,4 @@
-export type Retailer = "amazon" | "flipkart" | "myntra" | "other";
+export type Retailer = "amazon" | "flipkart" | "myntra" | "meesho" | "other";
 
 export type RetailerProduct = {
   id: string;
