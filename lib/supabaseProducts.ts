@@ -1,5 +1,5 @@
 import { supabase } from "@/lib/supabaseClient";
-import type { Product } from "@/data/products";
+import type { Product, Audience } from "@/data/products";
 import type { Retailer } from "@/lib/retailers/types";
 import type { IconName } from "@/lib/icons";
 
@@ -14,9 +14,12 @@ type SupabaseProductRow = {
   is_trending: boolean;
   is_best_pick: boolean;
   rating: number | null;
+  audience: string | null;
   affiliate_url: string;
   description: string | null;
 };
+
+const VALID_AUDIENCES: Audience[] = ["Men", "Women", "Kids", "Unisex"];
 
 const STORE_TO_RETAILER: Record<string, Retailer> = {
   Amazon: "amazon",
@@ -36,10 +39,14 @@ const CATEGORY_ICON: Record<string, IconName> = {
 
 // Admin-added products come from a much simpler Supabase row than the rich
 // static Product type (data/products.ts). This fills sensible defaults for
-// fields the admin form doesn't collect (icon, tone, audience) so admin
-// products can render through the exact same ProductCard component.
+// fields the admin form doesn't collect (icon, tone) so admin products can
+// render through the exact same ProductCard component.
 function normalizeProduct(row: SupabaseProductRow): Product {
   const price = row.price ?? 0;
+  const audience = VALID_AUDIENCES.includes(row.audience as Audience)
+    ? (row.audience as Audience)
+    : "Unisex";
+
   return {
     id: row.id,
     name: row.name,
@@ -59,7 +66,7 @@ function normalizeProduct(row: SupabaseProductRow): Product {
         : undefined,
     tone: "bg-[#EDE6D8]",
     description: row.description ?? "",
-    audience: "Unisex",
+    audience,
     retailer: STORE_TO_RETAILER[row.store] ?? "other",
     productUrl: row.affiliate_url,
   };

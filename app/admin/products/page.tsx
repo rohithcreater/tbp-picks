@@ -19,6 +19,7 @@ export default function AdminProductsPage() {
   const [price, setPrice] = useState("");
   const [rating, setRating] = useState("4.5");
   const [store, setStore] = useState("Myntra");
+  const [audience, setAudience] = useState("Unisex");
   const [imageUrls, setImageUrls] = useState("");
   const [affiliateUrl, setAffiliateUrl] = useState("");
   const [description, setDescription] = useState("");
@@ -66,6 +67,7 @@ export default function AdminProductsPage() {
       price: price ? Number(price) : null,
       rating: rating ? Number(rating) : 4.5,
       store,
+      audience,
       image_url: urlList[0] ?? "",
       image_urls: urlList,
       affiliate_url: affiliateUrl,
@@ -90,6 +92,7 @@ export default function AdminProductsPage() {
     setDescription("");
     setIsTrending(false);
     setIsBestPick(false);
+    setAudience("Unisex");
 
     loadProducts();
   }
@@ -173,6 +176,17 @@ export default function AdminProductsPage() {
             <option value="Amazon">Amazon</option>
             <option value="Flipkart">Flipkart</option>
             <option value="Other">Other</option>
+          </select>
+
+          <select
+            className="w-full rounded-lg border p-3"
+            value={audience}
+            onChange={(e) => setAudience(e.target.value)}
+          >
+            <option value="Unisex">Unisex</option>
+            <option value="Men">Men</option>
+            <option value="Women">Women</option>
+            <option value="Kids">Kids</option>
           </select>
 
           <textarea
