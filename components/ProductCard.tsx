@@ -26,7 +26,9 @@ export default function ProductCard({
       className="group flex flex-col overflow-hidden rounded-card border border-line/80 bg-white/60 shadow-card"
     >
       <div
-        className={`relative flex ${imageHeight} items-center justify-center ${product.tone}`}
+        className={`relative flex ${imageHeight} items-center justify-center overflow-hidden ${
+          product.imageUrl ? "bg-white" : product.tone
+        }`}
       >
         {product.trending && (
           <span className="absolute left-4 top-4 rounded-full bg-ink px-3 py-1 text-xs text-bone">
@@ -50,11 +52,20 @@ export default function ProductCard({
             className={saved ? "fill-gold-deep text-gold-deep" : ""}
           />
         </button>
-        <Icon
-          size={size === "large" ? 72 : 52}
-          strokeWidth={1.25}
-          className="text-ink/70 transition-transform duration-300 group-hover:scale-105"
-        />
+        {product.imageUrl ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={product.imageUrl}
+            alt={product.name}
+            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+          />
+        ) : (
+          <Icon
+            size={size === "large" ? 72 : 52}
+            strokeWidth={1.25}
+            className="text-ink/70 transition-transform duration-300 group-hover:scale-105"
+          />
+        )}
       </div>
 
       <div className="flex flex-1 flex-col gap-3 p-5">

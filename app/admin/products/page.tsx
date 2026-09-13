@@ -8,7 +8,7 @@ export default function AdminProductsPage() {
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState("");
   const [store, setStore] = useState("Myntra");
-  const [imageUrl, setImageUrl] = useState("");
+  const [imageUrls, setImageUrls] = useState("");
   const [affiliateUrl, setAffiliateUrl] = useState("");
   const [description, setDescription] = useState("");
   const [message, setMessage] = useState("");
@@ -24,13 +24,19 @@ export default function AdminProductsPage() {
       return;
     }
 
+    const urlList = imageUrls
+      .split("\n")
+      .map((u) => u.trim())
+      .filter(Boolean);
+
     const { error } = await supabase.from("products").insert({
       business_id: user.id,
       name,
       category,
       price: price ? Number(price) : null,
       store,
-      image_url: imageUrl,
+      image_url: urlList[0] ?? "",
+      image_urls: urlList,
       affiliate_url: affiliateUrl,
       description,
     });
@@ -45,7 +51,7 @@ export default function AdminProductsPage() {
     setName("");
     setCategory("");
     setPrice("");
-    setImageUrl("");
+    setImageUrls("");
     setAffiliateUrl("");
     setDescription("");
   }
@@ -98,11 +104,12 @@ export default function AdminProductsPage() {
             <option value="Other">Other</option>
           </select>
 
-          <input
+          <textarea
             className="w-full rounded-lg border p-3"
-            placeholder="Product image URL"
-            value={imageUrl}
-            onChange={(e) => setImageUrl(e.target.value)}
+            placeholder="Product image URLs — one per line"
+            rows={4}
+            value={imageUrls}
+            onChange={(e) => setImageUrls(e.target.value)}
           />
 
           <input

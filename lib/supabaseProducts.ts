@@ -10,6 +10,7 @@ type SupabaseProductRow = {
   price: number | null;
   store: string;
   image_url: string | null;
+  image_urls: string[] | null;
   affiliate_url: string;
   description: string | null;
 };
@@ -30,6 +31,10 @@ const CATEGORY_ICON: Record<string, IconName> = {
   Accessories: "Glasses",
 };
 
+// Admin-added products come from a much simpler Supabase row than the rich
+// static Product type (data/products.ts). This fills sensible defaults for
+// fields the admin form doesn't collect (rating, icon, tone, audience) so
+// admin products can render through the exact same ProductCard component.
 function normalizeProduct(row: SupabaseProductRow): Product {
   const price = row.price ?? 0;
   return {
@@ -41,6 +46,13 @@ function normalizeProduct(row: SupabaseProductRow): Product {
     rating: 4.5,
     trending: false,
     icon: CATEGORY_ICON[row.category] ?? "ShoppingBag",
+    imageUrl: row.image_url ?? row.image_urls?.[0] ?? undefined,
+    imageUrls:
+      row.image_urls && row.image_urls.length > 0
+        ? row.image_urls
+        : row.image_url
+        ? [row.image_url]
+        : undefined,
     tone: "bg-[#EDE6D8]",
     description: row.description ?? "",
     audience: "Unisex",

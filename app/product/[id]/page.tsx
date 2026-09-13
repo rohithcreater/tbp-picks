@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { Star, ArrowLeft } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import ProductGallery from "@/components/ProductGallery";
 import { allProducts, getProductById } from "@/data/products";
 import { getSupabaseProductById } from "@/lib/supabaseProducts";
 import { iconMap } from "@/lib/icons";
@@ -45,11 +46,26 @@ export default async function ProductPage({ params }: { params: { id: string } }
         </Link>
 
         <div className="mt-8 grid grid-cols-1 gap-12 md:grid-cols-2">
-          <div
-            className={`flex h-80 items-center justify-center rounded-card border border-line/80 md:h-[420px] ${product.tone}`}
-          >
-            <Icon size={96} strokeWidth={1} className="text-ink/70" />
-          </div>
+          {product.imageUrls && product.imageUrls.length > 0 ? (
+            <ProductGallery images={product.imageUrls} alt={product.name} />
+          ) : (
+            <div
+              className={`flex h-80 items-center justify-center overflow-hidden rounded-card border border-line/80 md:h-[420px] ${
+                product.imageUrl ? "bg-white" : product.tone
+              }`}
+            >
+              {product.imageUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={product.imageUrl}
+                  alt={product.name}
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                <Icon size={96} strokeWidth={1} className="text-ink/70" />
+              )}
+            </div>
+          )}
 
           <div>
             <p className="text-sm text-ink-soft">{product.category}</p>
@@ -69,8 +85,8 @@ export default async function ProductPage({ params }: { params: { id: string } }
             <p className="mt-8 font-display text-3xl text-ink">{product.price}</p>
 
             <div className="mt-8 flex flex-wrap gap-4">
-               
-                           <a href={`/api/go?retailer=${product.retailer}&url=${encodeURIComponent(product.productUrl)}`}
+              
+               <a href={`/api/go?retailer=${product.retailer}&url=${encodeURIComponent(product.productUrl)}`}
                 target="_blank"
                 rel="noopener noreferrer sponsored"
                 className="rounded-full bg-ink px-8 py-3.5 text-[15px] text-bone transition-colors hover:bg-gold-deep"
