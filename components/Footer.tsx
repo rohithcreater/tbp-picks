@@ -11,15 +11,15 @@ const columns = [
   {
     title: "Company",
     links: [
-      { label: "About", href: "#" },
-      { label: "Contact", href: "#" },
+{ label: "About", href: "/about" },
+{ label: "Contact", href: "/contact" },
     ],
   },
   {
     title: "Legal",
     links: [
-      { label: "Privacy", href: "#" },
-      { label: "Terms", href: "#" },
+     { label: "Privacy", href: "/privacy" },
+{ label: "Terms", href: "/terms" },
     ],
   },
 ];
