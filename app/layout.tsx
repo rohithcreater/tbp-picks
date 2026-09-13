@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   title: "TBP Picks — Trendy & Best Picks",
   description:
     "Discover products worth buying. TBP Picks surfaces trending and carefully selected products worth your attention.",
+  verification: {
+    google: "BSbUno_s9_w9TYSF_HZ8BgmQNj3iWQXVm2vJl_Tj-1A",
+  },
 };
 
 export default function RootLayout({
