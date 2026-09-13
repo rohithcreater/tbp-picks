@@ -11,6 +11,8 @@ type SupabaseProductRow = {
   store: string;
   image_url: string | null;
   image_urls: string[] | null;
+  is_trending: boolean;
+  is_best_pick: boolean;
   affiliate_url: string;
   description: string | null;
 };
@@ -44,7 +46,8 @@ function normalizeProduct(row: SupabaseProductRow): Product {
     price: `₹${price.toLocaleString("en-IN")}`,
     priceValue: price,
     rating: 4.5,
-    trending: false,
+    trending: row.is_trending,
+    isBestPick: row.is_best_pick,
     icon: CATEGORY_ICON[row.category] ?? "ShoppingBag",
     imageUrl: row.image_url ?? row.image_urls?.[0] ?? undefined,
     imageUrls:

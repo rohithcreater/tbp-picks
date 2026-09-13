@@ -11,6 +11,7 @@ export type Product = {
   priceValue: number;
   rating: number;
   trending?: boolean;
+   isBestPick?: boolean;
   icon: IconName;
   imageUrl?: string;
   imageUrls?: string[];

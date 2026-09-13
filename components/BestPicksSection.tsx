@@ -1,8 +1,14 @@
 import Link from "next/link";
 import { bestPicks } from "@/data/products";
+import { getSupabaseProducts } from "@/lib/supabaseProducts";
 import ProductCard from "./ProductCard";
 
-export default function BestPicksSection() {
+export default async function BestPicksSection() {
+  const supabaseProducts = await getSupabaseProducts();
+  const bestPickSupabase = supabaseProducts.filter((p) => p.isBestPick);
+  // Only products explicitly marked Best Pick in admin show here, newest first.
+  const displayProducts = [...bestPickSupabase, ...bestPicks].slice(0, 8);
+
   return (
     <section id="best-picks" className="bg-sand/50 py-20">
       <div className="mx-auto max-w-content px-6 md:px-10">
@@ -13,17 +19,16 @@ export default function BestPicksSection() {
               Carefully selected products worth discovering.
             </p>
           </div>
-
           <Link
             href="/shop"
-            className="text-sm text-ink underline underline-offset-4 transition-colors hover:text-gold-deep"
+            className="text-sm font-medium text-ink underline underline-offset-4 transition-colors hover:text-gold-deep"
           >
             See All
           </Link>
         </div>
 
-        <div className="mt-10 grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
-          {bestPicks.map((product) => (
+        <div className="mt-10 grid grid-cols-2 gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {displayProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>

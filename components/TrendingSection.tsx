@@ -5,9 +5,9 @@ import ProductCard from "./ProductCard";
 
 export default async function TrendingSection() {
   const supabaseProducts = await getSupabaseProducts();
-  // Newest admin-added products lead, curated static ones fill the rest,
-  // capped so the section doesn't grow unbounded as you add more products.
-  const displayProducts = [...supabaseProducts, ...trendingProducts].slice(0, 8);
+  const trendingSupabase = supabaseProducts.filter((p) => p.trending);
+  // Only products explicitly marked Trending in admin show here, newest first.
+  const displayProducts = [...trendingSupabase, ...trendingProducts].slice(0, 8);
 
   return (
     <section id="discover" className="mx-auto max-w-content px-6 py-20 md:px-10">
