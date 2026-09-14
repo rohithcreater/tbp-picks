@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { Star, Heart } from "lucide-react";
 import type { Product } from "@/data/products";
 import { useWishlist } from "@/lib/wishlist-context";
@@ -22,10 +21,9 @@ export default function ProductCard({
   const [nameExpanded, setNameExpanded] = useState(false);
 
   return (
-    <motion.article
-      whileHover={{ y: -4 }}
-      transition={{ duration: 0.25, ease: "easeOut" }}
-      className="group flex flex-col overflow-hidden rounded-card border border-line/80 bg-white/60 shadow-card"
+    <Link
+      href={`/product/${product.id}`}
+      className="group flex flex-col overflow-hidden rounded-card border border-line/80 bg-white/60 shadow-card transition-transform duration-200 ease-out will-change-transform hover:-translate-y-1"
     >
       <div
         className={`relative flex ${imageHeight} items-center justify-center overflow-hidden ${
@@ -59,6 +57,8 @@ export default function ProductCard({
           <img
             src={product.imageUrl}
             alt={product.name}
+            loading="lazy"
+            decoding="async"
             className="pointer-events-none h-full w-full object-contain p-4 transition-transform duration-300 group-hover:scale-105"
           />
         ) : (
@@ -95,14 +95,11 @@ export default function ProductCard({
 
         <div className="mt-auto flex items-center justify-between pt-2">
           <span className="font-display text-lg text-ink">{product.price}</span>
-          <Link
-            href={`/product/${product.id}`}
-            className="rounded-full border border-ink/15 px-4 py-2 text-sm text-ink transition-colors hover:border-ink hover:bg-ink hover:text-bone"
-          >
+          <span className="rounded-full border border-ink/15 px-4 py-2 text-sm text-ink transition-colors group-hover:border-ink group-hover:bg-ink group-hover:text-bone">
             View Product
-          </Link>
+          </span>
         </div>
       </div>
-    </motion.article>
+    </Link>
   );
 }
