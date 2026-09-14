@@ -1,16 +1,25 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Heart } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
-import { allProducts } from "@/data/products";
+import { allProducts, type Product } from "@/data/products";
+import { getSupabaseProducts } from "@/lib/supabaseProducts";
 import { useWishlist } from "@/lib/wishlist-context";
 
 export default function WishlistPage() {
   const { wishlist } = useWishlist();
-  const savedProducts = allProducts.filter((p) => wishlist.includes(p.id));
+  const [supabaseProducts, setSupabaseProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    getSupabaseProducts().then(setSupabaseProducts);
+  }, []);
+
+  const combinedProducts = [...allProducts, ...supabaseProducts];
+  const savedProducts = combinedProducts.filter((p) => wishlist.includes(p.id));
 
   return (
     <main className="bg-bone">
@@ -18,10 +27,10 @@ export default function WishlistPage() {
 
       <section className="mx-auto max-w-content px-6 py-14 md:px-10">
         <div className="max-w-lg">
-        <h1 className="font-display text-3xl text-ink md:text-4xl">Your Wishlist</h1>
-<p className="mt-3 text-ink-soft">
-  Products you&apos;ve saved with the heart icon, kept on this device.
-</p>
+          <h1 className="font-display text-3xl text-ink md:text-4xl">Your Wishlist</h1>
+          <p className="mt-3 text-ink-soft">
+            Products you&apos;ve saved with the heart icon, kept on this device.
+          </p>
         </div>
 
         {savedProducts.length === 0 ? (
