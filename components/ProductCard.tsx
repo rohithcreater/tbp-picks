@@ -46,7 +46,7 @@ export default function ProductCard({
           }}
           aria-label={saved ? "Remove from wishlist" : "Add to wishlist"}
           aria-pressed={saved}
-          className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-white/85 text-ink-soft shadow-card transition-colors hover:text-gold-deep"
+          className="absolute right-4 top-4 z-20 flex h-9 w-9 items-center justify-center rounded-full bg-white/85 text-ink-soft shadow-card transition-colors hover:text-gold-deep"
         >
           <Heart
             size={17}
@@ -59,13 +59,13 @@ export default function ProductCard({
           <img
             src={product.imageUrl}
             alt={product.name}
-            className="h-full w-full object-contain p-4 transition-transform duration-300 group-hover:scale-105"
+            className="pointer-events-none h-full w-full object-contain p-4 transition-transform duration-300 group-hover:scale-105"
           />
         ) : (
           <Icon
             size={size === "large" ? 72 : 52}
             strokeWidth={1.25}
-            className="text-ink/70 transition-transform duration-300 group-hover:scale-105"
+            className="pointer-events-none text-ink/70 transition-transform duration-300 group-hover:scale-105"
           />
         )}
       </div>
