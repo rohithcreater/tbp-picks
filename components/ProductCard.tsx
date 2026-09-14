@@ -23,7 +23,7 @@ export default function ProductCard({
   return (
     <Link
       href={`/product/${product.id}`}
-      className="group flex flex-col overflow-hidden rounded-card border border-line/80 bg-white/60 shadow-card transition-transform duration-200 ease-out will-change-transform hover:-translate-y-1"
+     className="group flex flex-col overflow-hidden rounded-card border border-line/80 bg-white/60 shadow-card transition-transform duration-200 ease-out hover:-translate-y-1"
     >
       <div
         className={`relative flex ${imageHeight} items-center justify-center overflow-hidden ${
