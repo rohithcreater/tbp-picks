@@ -32,7 +32,7 @@ export default function ProductGallery({
               }`}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={src} alt="" className="h-full w-full object-cover" />
+              <img src={images[active]} alt={alt} className="h-full w-full object-contain p-6" />
             </button>
           ))}
         </div>

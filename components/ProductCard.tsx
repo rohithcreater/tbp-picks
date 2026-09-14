@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Star, Heart } from "lucide-react";
@@ -18,6 +19,7 @@ export default function ProductCard({
   const imageHeight = size === "large" ? "h-64 md:h-80" : "h-48";
   const { isWishlisted, toggleWishlist } = useWishlist();
   const saved = isWishlisted(product.id);
+  const [nameExpanded, setNameExpanded] = useState(false);
 
   return (
     <motion.article
@@ -57,7 +59,7 @@ export default function ProductCard({
           <img
             src={product.imageUrl}
             alt={product.name}
-            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+            className="h-full w-full object-contain p-4 transition-transform duration-300 group-hover:scale-105"
           />
         ) : (
           <Icon
@@ -72,7 +74,16 @@ export default function ProductCard({
         <div className="flex items-start justify-between gap-3">
           <div>
             <p className="text-[13px] text-ink-soft">{product.category}</p>
-            <h3 className="mt-0.5 font-display text-lg leading-snug text-ink">
+            <h3
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setNameExpanded((v) => !v);
+              }}
+              className={`mt-0.5 cursor-pointer font-display text-lg leading-snug text-ink ${
+                nameExpanded ? "" : "line-clamp-2"
+              }`}
+            >
               {product.name}
             </h3>
           </div>
